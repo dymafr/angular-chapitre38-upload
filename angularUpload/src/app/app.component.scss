@@ -1,0 +1,46 @@
+.container {
+  min-height: 100vh;
+  .content {
+    min-height: 500px;
+    width: 800px;
+    .upload {
+      border: 1px dashed #ddd;
+      border-radius: 5px;
+      height: 80px;
+      cursor: copy;
+      .upload-icon {
+        font-size: 30px;
+        color: #ccc;
+      }
+    }
+    .over {
+      background: #eee;
+    }
+    .files {
+      .file {
+        padding: 15px 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        .spinner-container {
+          position: relative;
+          width: 40px;
+          height: 40px;
+          .spinner {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+          }
+          .spinner-nbr {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}

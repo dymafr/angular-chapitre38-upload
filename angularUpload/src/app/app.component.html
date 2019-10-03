@@ -1,0 +1,51 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <div class="content" fxLayout="column" fxLayoutGap="15px">
+    <div
+      (click)="openFile()"
+      (drop)="dropFile($event); over = false"
+      (dragover)="$event.preventDefault()"
+      (dragenter)="over = true"
+      (dragleave)="over = false"
+      class="upload"
+      [class.over]="over"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+    >
+      <input
+        (change)="addFiles($event)"
+        multiple
+        #fileinput
+        type="file"
+        fxHide="true"
+      />
+      <mat-icon class="upload-icon">cloud_upload</mat-icon>
+    </div>
+    <div class="files" fxLayout="column" fxLayoutGap="5px">
+      <div
+        class="file"
+        *ngFor="let fileHolder of filesHolder$ | async; let i = index"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <span>{{ fileHolder.file.name }}</span>
+        <span fxFlex="auto"></span>
+        <div
+          class="spinner-container"
+          *ngIf="fileHolder.progress$ | async; let progress"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+        >
+          <mat-spinner
+            class="spinner"
+            diameter="40"
+            mode="determinate"
+            [value]="progress"
+          ></mat-spinner>
+          <span class="spinner-nbr">{{ progress }}%</span>
+        </div>
+
+        <mat-icon class="clickable" (click)="removeFile(i)">clear</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>
