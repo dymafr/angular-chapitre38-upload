@@ -1,17 +1,18 @@
-import { FileService } from './file.service';
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
+import { FileService } from "./file.service";
+import { Component, ViewChild, ElementRef, OnInit } from "@angular/core";
+import { fromEvent, Observable } from "rxjs";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
+  public over: boolean;
   public filesHolder$: Observable<
     { file: File; progress$: Observable<number> }[]
   > = this.fileService.filesHolder$.asObservable();
-  @ViewChild('fileinput', { static: true }) inputRef: ElementRef;
+  @ViewChild("fileinput", { static: true }) inputRef: ElementRef;
 
   constructor(private fileService: FileService) {}
 
