@@ -28,6 +28,10 @@
         fxLayoutAlign="start center"
       >
         <span>{{ fileHolder.file.name }}</span>
+        <img
+          style="max-height: 50px"
+          src="{{ baseURL + fileHolder.file.name }}"
+        />
         <span fxFlex="auto"></span>
         <div
           class="spinner-container"

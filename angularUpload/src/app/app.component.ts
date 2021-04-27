@@ -8,6 +8,7 @@ import { fromEvent, Observable } from "rxjs";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
+  public baseURL = 'http://localhost:3000/';
   public over: boolean;
   public filesHolder$: Observable<
     { file: File; progress$: Observable<number> }[]
