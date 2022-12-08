@@ -5,30 +5,30 @@ import {
   HttpClient,
   HttpRequest,
   HttpEvent,
-  HttpEventType
+  HttpEventType,
 } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FileService {
-  public filesHolder$: BehaviorSubject<
+  public filesHolder$ = new BehaviorSubject<
     {
       file: File;
       progress$: Observable<number>;
     }[]
-  > = new BehaviorSubject([]);
+  >([]);
 
   constructor(private http: HttpClient) {}
 
-  public addFiles(files) {
+  public addFiles(files: FileList) {
     this.filesHolder$.next([
       ...this.filesHolder$.value,
       ...Array.from(files).map((f: File) => {
         const formData = new FormData();
         formData.append('f', f);
         const request = new HttpRequest('POST', '/api/files', formData, {
-          reportProgress: true
+          reportProgress: true,
         });
         return {
           file: f,
@@ -39,7 +39,9 @@ export class FileService {
                   return 0;
                 }
                 case HttpEventType.UploadProgress: {
-                  return Math.round((event.loaded / event.total) * 100);
+                  return event.total
+                    ? Math.round((event.loaded / event.total) * 100)
+                    : 0;
                 }
                 case HttpEventType.Response: {
                   return 100;
@@ -49,13 +51,13 @@ export class FileService {
                 }
               }
             })
-          )
+          ),
         };
-      })
+      }),
     ]);
   }
 
-  public removeFile(index) {
+  public removeFile(index: number) {
     const files = this.filesHolder$.value.slice();
     this.http.delete(`/api/files/${files[index].file.name}`).subscribe();
     files.splice(index, 1);
